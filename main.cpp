@@ -60,6 +60,7 @@ int main() {
 
         qty.push_back(quantity);
         itemTotal.push_back(price * quantity);
+
         subtotal += price * quantity;
 
         cout << "Add another item? (y/n): ";
@@ -85,10 +86,28 @@ int main() {
     sst = 0.06 * afterDiscount;
     total = afterDiscount + sst;
 
-    cout << "Subtotal: RM " << subtotal << endl;
-    cout << "Discount: RM " << discount << endl;
-    cout << "After Discount: RM " << afterDiscount << endl;
-    cout << "SST (6%): RM " << sst << endl;
-    cout << "Total Payment: RM " << total << endl;
+    // Print receipt
+    cout << "\n--------------------- ORDER SUMMARY ---------------------\n";
+    cout << left << setw(20) << "Item"
+         << right << setw(5) << "Qty"
+         << right << setw(15) << "Price(RM)"
+         << right << setw(15) << "Total(RM)" << endl;
+
+    cout << "---------------------------------------------------------\n";
+
+    for (int i = 0; i < items.size(); i++) {
+        cout << left << setw(20) << items[i]
+             << right << setw(5) << qty[i]
+             << right << setw(15) << fixed << setprecision(2) << (itemTotal[i] / qty[i])
+             << right << setw(15) << fixed << setprecision(2) << itemTotal[i] << endl;
+    }
+
+    cout << "---------------------------------------------------------\n";
+    cout << right << setw(50) << "Subtotal: RM " << subtotal << endl;
+    cout << right << setw(50) << "Discount: RM " << discount << endl;
+    cout << right << setw(50) << "SST (6%): RM " << sst << endl;
+    cout << right << setw(50) << "Total Payment: RM " << total << endl;
+
+    cout << "\n\t\t\tThank you for shopping with us!\n";
     return 0;
 }
