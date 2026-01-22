@@ -5,7 +5,8 @@ using namespace std;
 
 int main() {
     int choice, quantity;
-    double price = 0.0, subtotal = 0.0;
+    double price = 0.0, subtotal = 0.0, discount = 0.0;
+    string promoCode;
     char addMore;
 
     vector<string> items;
@@ -25,13 +26,34 @@ int main() {
         cout << "Select product (1-6): ";
         cin >> choice;
 
-        if (choice == 1) { price = 35; items.push_back("Rice"); }
-        else if (choice == 2) { price = 18; items.push_back("Cooking Oil"); }
-        else if (choice == 3) { price = 6; items.push_back("Milk"); }
-        else if (choice == 4) { price = 4; items.push_back("Bread"); }
-        else if (choice == 5) { price = 8; items.push_back("Eggs"); }
-        else if (choice == 6) { price = 5; items.push_back("Instant Noodles"); }
-        else continue;
+        if (choice == 1) {
+            price = 35;
+            items.push_back("Rice (5kg)");
+        }
+        else if (choice == 2) {
+            price = 18;
+            items.push_back("Cooking Oil (2L)");
+        }
+        else if (choice == 3) {
+            price = 6;
+            items.push_back("Milk (1L)");
+        }
+        else if (choice == 4) {
+            price = 4;
+            items.push_back("Bread");
+        }
+        else if (choice == 5) {
+            price = 8;
+            items.push_back("Eggs (10 pcs)");
+        }
+        else if (choice == 6) {
+            price = 5;
+            items.push_back("Instant Noodles");
+        }
+        else {
+            cout << "Invalid choice!\n";
+            continue;
+        }
 
         cout << "Enter quantity: ";
         cin >> quantity;
@@ -45,6 +67,22 @@ int main() {
 
     } while (addMore == 'y' || addMore == 'Y');
 
+    // Apply promo code
+    cout << "Enter promo code (SAVE10/SAVE20/NONE): ";
+    cin >> promoCode;
+
+    if (promoCode == "SAVE10") {
+        discount = 0.10 * subtotal;
+    } else if (promoCode == "SAVE20") {
+        discount = 0.20 * subtotal;
+    } else {
+        discount = 0.0;
+    }
+
+    double afterDiscount = subtotal - discount;
+
     cout << "Subtotal: RM " << subtotal << endl;
+    cout << "Discount: RM " << discount << endl;
+    cout << "After Discount: RM " << afterDiscount << endl;
     return 0;
 }
