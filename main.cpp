@@ -4,6 +4,7 @@ using namespace std;
 
 int main() {
     int choice;
+    double price = 0.0;
 
     cout << fixed << setprecision(2);
 
@@ -17,5 +18,17 @@ int main() {
     cout << "Select product (1-6): ";
     cin >> choice;
 
+    if (choice == 1) price = 35;
+    else if (choice == 2) price = 18;
+    else if (choice == 3) price = 6;
+    else if (choice == 4) price = 4;
+    else if (choice == 5) price = 8;
+    else if (choice == 6) price = 5;
+    else {
+        cout << "Invalid choice!\n";
+        return 0;
+    }
+
+    cout << "Price selected: RM " << price << endl;
     return 0;
 }
