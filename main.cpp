@@ -3,8 +3,8 @@
 using namespace std;
 
 int main() {
-    int choice;
-    double price = 0.0;
+    int choice, quantity;
+    double price = 0.0, subtotal = 0.0;
 
     cout << fixed << setprecision(2);
 
@@ -29,6 +29,11 @@ int main() {
         return 0;
     }
 
-    cout << "Price selected: RM " << price << endl;
+    cout << "Enter quantity: ";
+    cin >> quantity;
+
+    subtotal = price * quantity;
+    cout << "Subtotal: RM " << subtotal << endl;
+
     return 0;
 }
