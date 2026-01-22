@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     int choice, quantity;
-    double price = 0.0, subtotal = 0.0, discount = 0.0;
+    double price = 0.0, subtotal = 0.0, discount = 0.0, sst, total;
     string promoCode;
     char addMore;
 
@@ -81,8 +81,14 @@ int main() {
 
     double afterDiscount = subtotal - discount;
 
+    // Apply SST 6%
+    sst = 0.06 * afterDiscount;
+    total = afterDiscount + sst;
+
     cout << "Subtotal: RM " << subtotal << endl;
     cout << "Discount: RM " << discount << endl;
     cout << "After Discount: RM " << afterDiscount << endl;
+    cout << "SST (6%): RM " << sst << endl;
+    cout << "Total Payment: RM " << total << endl;
     return 0;
 }
