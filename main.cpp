@@ -3,11 +3,23 @@
 #include <vector>
 using namespace std;
 
+double getPrice(int choice, string &itemName) {
+    switch(choice) {
+        case 1: itemName = "Rice (5kg)"; return 35;
+        case 2: itemName = "Cooking Oil (2L)"; return 18;
+        case 3: itemName = "Milk (1L)"; return 6;
+        case 4: itemName = "Bread"; return 4;
+        case 5: itemName = "Eggs (10 pcs)"; return 8;
+        case 6: itemName = "Instant Noodles"; return 5;
+        default: return 0;
+    }
+}
+
 int main()
 {
     int choice, quantity;
     double price = 0.0, subtotal = 0.0, discount = 0.0, sst, total;
-    string promoCode;
+    string promoCode, itemName;
     char addMore;
 
     vector<string> items;
@@ -28,41 +40,12 @@ int main()
         cout << "Select product (1-6): ";
         cin >> choice;
 
-        if (choice == 1)
-        {
-            price = 35;
-            items.push_back("Rice (5kg)");
-        }
-        else if (choice == 2)
-        {
-            price = 18;
-            items.push_back("Cooking Oil (2L)");
-        }
-        else if (choice == 3)
-        {
-            price = 6;
-            items.push_back("Milk (1L)");
-        }
-        else if (choice == 4)
-        {
-            price = 4;
-            items.push_back("Bread");
-        }
-        else if (choice == 5)
-        {
-            price = 8;
-            items.push_back("Eggs (10 pcs)");
-        }
-        else if (choice == 6)
-        {
-            price = 5;
-            items.push_back("Instant Noodles");
-        }
-        else
-        {
+        price = getPrice(choice, itemName);
+        if(price == 0) {
             cout << "Invalid choice!\n";
             continue;
         }
+        items.push_back(itemName);
 
         do
         {
@@ -134,3 +117,4 @@ int main()
     cout << "\n\t\t\tThank you for shopping with us!\n";
     return 0;
 }
+
