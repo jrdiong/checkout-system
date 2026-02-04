@@ -63,6 +63,30 @@ int main()
 
         subtotal += price * quantity;
 
+        // Loop for removing previous items
+        char removeItem;
+        do {
+            if(items.empty()) break;
+
+            // Display current cart
+            cout << "\nCurrent cart:\n";
+            for(int i = 0; i < items.size(); i++){
+                cout << i+1 << ". " << items[i] << " x" << qty[i] << " = RM" << itemTotal[i] << endl;
+            }
+
+            cout << "Do you want to remove the last item? (y/n): ";
+            cin >> removeItem;
+
+            if(removeItem == 'y' || removeItem == 'Y'){
+                subtotal -= itemTotal.back();  // subtract last item total
+                items.pop_back();
+                qty.pop_back();
+                itemTotal.pop_back();
+                cout << "Last item removed.\n";
+            }
+
+        } while(removeItem == 'y' || removeItem == 'Y');
+
         cout << "Add another item? (y/n): ";
         cin >> addMore;
 
