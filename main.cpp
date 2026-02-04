@@ -15,6 +15,31 @@ double getPrice(int choice, string &itemName) {
     }
 }
 
+void printReceipt(const vector<string>& items, const vector<int>& qty,
+                  const vector<double>& itemTotal, double subtotal,
+                  double discount, double sst, double total) {
+    cout << "\n--------------------- ORDER SUMMARY ---------------------\n";
+    cout << left << setw(20) << "Item"
+         << right << setw(5) << "Qty"
+         << right << setw(15) << "Price(RM)"
+         << right << setw(15) << "Total(RM)" << endl;
+    cout << "---------------------------------------------------------\n";
+
+    for(int i = 0; i < items.size(); i++) {
+        cout << left << setw(20) << items[i]
+             << right << setw(5) << qty[i]
+             << right << setw(15) << fixed << setprecision(2) << (itemTotal[i] / qty[i])
+             << right << setw(15) << fixed << setprecision(2) << itemTotal[i] << endl;
+    }
+
+    cout << "---------------------------------------------------------\n";
+    cout << right << setw(50) << "Subtotal: RM " << subtotal << endl;
+    cout << right << setw(50) << "Discount: RM " << discount << endl;
+    cout << right << setw(50) << "SST (6%): RM " << sst << endl;
+    cout << right << setw(50) << "Total Payment: RM " << total << endl;
+    cout << "\n\t\t\tThank you for shopping with us!\n";
+}
+
 int main()
 {
     int choice, quantity;
@@ -30,7 +55,7 @@ int main()
 
     do
     {
-        cout << "\n===== SIMPLE STORE CHECKOUT SYSTEM =====\n";
+        cout << "\n===== SIMPLE CHECKOUT SYSTEM =====\n";
         cout << "1. Rice (5kg)        RM35\n";
         cout << "2. Cooking Oil (2L)  RM18\n";
         cout << "3. Milk (1L)         RM6\n";
@@ -122,29 +147,7 @@ int main()
     total = afterDiscount + sst;
 
     // Print receipt
-    cout << "\n--------------------- ORDER SUMMARY ---------------------\n";
-    cout << left << setw(20) << "Item"
-         << right << setw(5) << "Qty"
-         << right << setw(15) << "Price(RM)"
-         << right << setw(15) << "Total(RM)" << endl;
+    printReceipt(items, qty, itemTotal, subtotal, discount, sst, total);
 
-    cout << "---------------------------------------------------------\n";
-
-    for (int i = 0; i < items.size(); i++)
-    {
-        cout << left << setw(20) << items[i]
-             << right << setw(5) << qty[i]
-             << right << setw(15) << fixed << setprecision(2) << (itemTotal[i] / qty[i])
-             << right << setw(15) << fixed << setprecision(2) << itemTotal[i] << endl;
-    }
-
-    cout << "---------------------------------------------------------\n";
-    cout << right << setw(50) << "Subtotal: RM " << subtotal << endl;
-    cout << right << setw(50) << "Discount: RM " << discount << endl;
-    cout << right << setw(50) << "SST (6%): RM " << sst << endl;
-    cout << right << setw(50) << "Total Payment: RM " << total << endl;
-
-    cout << "\n\t\t\tThank you for shopping with us!\n";
     return 0;
 }
-
