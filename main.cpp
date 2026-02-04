@@ -3,6 +3,7 @@
 #include <vector>
 using namespace std;
 
+// Function to get item price and name
 double getPrice(int choice, string &itemName) {
     switch(choice) {
         case 1: itemName = "Rice (5kg)"; return 35;
@@ -15,6 +16,7 @@ double getPrice(int choice, string &itemName) {
     }
 }
 
+// Function to print receipt
 void printReceipt(const vector<string>& items, const vector<int>& qty,
                   const vector<double>& itemTotal, double subtotal,
                   double discount, double sst, double total) {
@@ -53,8 +55,10 @@ int main()
 
     cout << fixed << setprecision(2);
 
+    // Add items loop
     do
     {
+        // Show menu
         cout << "\n===== SIMPLE CHECKOUT SYSTEM =====\n";
         cout << "1. Rice (5kg)        RM35\n";
         cout << "2. Cooking Oil (2L)  RM18\n";
@@ -70,8 +74,8 @@ int main()
             cout << "Invalid choice!\n";
             continue;
         }
-        items.push_back(itemName);
 
+        // Quantity input with validation
         do
         {
             cout << "Enter quantity: ";
@@ -83,71 +87,78 @@ int main()
             }
         } while (quantity <= 0);
 
+        // Add to cart
+        items.push_back(itemName);
         qty.push_back(quantity);
         itemTotal.push_back(price * quantity);
 
         subtotal += price * quantity;
 
-        // Loop for removing previous items
-        char removeItem;
-        do {
-            if(items.empty()) break;
+        cout << "Do you want to add another item? (y/n): ";
+        cin >> addMore;
 
+    } while (addMore == 'y' || addMore == 'Y');
+
+    // Remove items before checkout
+    if(!items.empty()) {
+        char removePrompt;
+        cout << "\nDo you want to remove any item before checkout? (y/n): ";
+        cin >> removePrompt;
+
+        while((removePrompt == 'y' || removePrompt == 'Y') && !items.empty()) {
             // Display current cart
             cout << "\nCurrent cart:\n";
             for(int i = 0; i < items.size(); i++){
                 cout << i+1 << ". " << items[i] << " x" << qty[i] << " = RM" << itemTotal[i] << endl;
             }
 
-            cout << "Do you want to remove the last item? (y/n): ";
-            cin >> removeItem;
+            int removeIndex;
+            cout << "Enter the number of the item to remove (0 to cancel): ";
+            cin >> removeIndex;
 
-            if(removeItem == 'y' || removeItem == 'Y'){
-                subtotal -= itemTotal.back();  // subtract last item total
-                items.pop_back();
-                qty.pop_back();
-                itemTotal.pop_back();
-                cout << "Last item removed.\n";
+            if(removeIndex > 0 && removeIndex <= items.size()) {
+                int idx = removeIndex - 1;
+                subtotal -= itemTotal[idx];
+                cout << items[idx] << " removed from the cart.\n";
+                items.erase(items.begin() + idx);
+                qty.erase(qty.begin() + idx);
+                itemTotal.erase(itemTotal.begin() + idx);
+            } else if(removeIndex != 0) {
+                cout << "Invalid item number!\n";
             }
 
-        } while(removeItem == 'y' || removeItem == 'Y');
-
-        cout << "Add another item? (y/n): ";
-        cin >> addMore;
-
-    } while (addMore == 'y' || addMore == 'Y');
-
-    // Apply promo code
-    do {
-        cout << "Enter promo code (SAVE10/SAVE20/NONE): ";
-        cin >> promoCode;
-
-        if(promoCode != "SAVE10" && promoCode != "SAVE20" && promoCode != "NONE"){
-            cout << "Invalid promo code! Enter again.\n";
+            if(!items.empty()) {
+                cout << "Do you want to remove another item? (y/n): ";
+                cin >> removePrompt;
+            } else break;
         }
-    } while(promoCode != "SAVE10" && promoCode != "SAVE20" && promoCode != "NONE");
-
-    if (promoCode == "SAVE10")
-    {
-        discount = 0.10 * subtotal;
-    }
-    else if (promoCode == "SAVE20")
-    {
-        discount = 0.20 * subtotal;
-    }
-    else
-    {
-        discount = 0.0;
     }
 
-    double afterDiscount = subtotal - discount;
+    if(!items.empty()) {
+        do {
+            // Promo code with validation
+            cout << "\nEnter promo code (SAVE10/SAVE20/NONE): ";
+            cin >> promoCode;
+            if(promoCode != "SAVE10" && promoCode != "SAVE20" && promoCode != "NONE") {
+                cout << "Invalid promo code! Enter again.\n";
+            }
+        } while(promoCode != "SAVE10" && promoCode != "SAVE20" && promoCode != "NONE");
 
-    // Apply SST 6%
-    sst = 0.06 * afterDiscount;
-    total = afterDiscount + sst;
+        // Apply discount
+        if(promoCode == "SAVE10") discount = 0.10 * subtotal;
+        else if(promoCode == "SAVE20") discount = 0.20 * subtotal;
+        else discount = 0.0;
 
-    // Print receipt
-    printReceipt(items, qty, itemTotal, subtotal, discount, sst, total);
+        double afterDiscount = subtotal - discount;
+        // Apply SST 6%
+        sst = 0.06 * afterDiscount;
+        total = afterDiscount + sst;
+
+        // Print receipt
+        printReceipt(items, qty, itemTotal, subtotal, discount, sst, total);
+    } else {
+        cout << "\nYour cart is empty. No checkout needed.\n";
+    }
 
     return 0;
 }
