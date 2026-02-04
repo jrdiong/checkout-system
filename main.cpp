@@ -3,7 +3,8 @@
 #include <vector>
 using namespace std;
 
-int main() {
+int main()
+{
     int choice, quantity;
     double price = 0.0, subtotal = 0.0, discount = 0.0, sst, total;
     string promoCode;
@@ -15,7 +16,8 @@ int main() {
 
     cout << fixed << setprecision(2);
 
-    do {
+    do
+    {
         cout << "\n===== SIMPLE STORE CHECKOUT SYSTEM =====\n";
         cout << "1. Rice (5kg)        RM35\n";
         cout << "2. Cooking Oil (2L)  RM18\n";
@@ -26,37 +28,52 @@ int main() {
         cout << "Select product (1-6): ";
         cin >> choice;
 
-        if (choice == 1) {
+        if (choice == 1)
+        {
             price = 35;
             items.push_back("Rice (5kg)");
         }
-        else if (choice == 2) {
+        else if (choice == 2)
+        {
             price = 18;
             items.push_back("Cooking Oil (2L)");
         }
-        else if (choice == 3) {
+        else if (choice == 3)
+        {
             price = 6;
             items.push_back("Milk (1L)");
         }
-        else if (choice == 4) {
+        else if (choice == 4)
+        {
             price = 4;
             items.push_back("Bread");
         }
-        else if (choice == 5) {
+        else if (choice == 5)
+        {
             price = 8;
             items.push_back("Eggs (10 pcs)");
         }
-        else if (choice == 6) {
+        else if (choice == 6)
+        {
             price = 5;
             items.push_back("Instant Noodles");
         }
-        else {
+        else
+        {
             cout << "Invalid choice!\n";
             continue;
         }
 
-        cout << "Enter quantity: ";
-        cin >> quantity;
+        do
+        {
+            cout << "Enter quantity: ";
+            cin >> quantity;
+
+            if (quantity <= 0)
+            {
+                cout << "Invalid quantity! Please enter a positive number.\n";
+            }
+        } while (quantity <= 0);
 
         qty.push_back(quantity);
         itemTotal.push_back(price * quantity);
@@ -72,11 +89,16 @@ int main() {
     cout << "Enter promo code (SAVE10/SAVE20/NONE): ";
     cin >> promoCode;
 
-    if (promoCode == "SAVE10") {
+    if (promoCode == "SAVE10")
+    {
         discount = 0.10 * subtotal;
-    } else if (promoCode == "SAVE20") {
+    }
+    else if (promoCode == "SAVE20")
+    {
         discount = 0.20 * subtotal;
-    } else {
+    }
+    else
+    {
         discount = 0.0;
     }
 
@@ -95,7 +117,8 @@ int main() {
 
     cout << "---------------------------------------------------------\n";
 
-    for (int i = 0; i < items.size(); i++) {
+    for (int i = 0; i < items.size(); i++)
+    {
         cout << left << setw(20) << items[i]
              << right << setw(5) << qty[i]
              << right << setw(15) << fixed << setprecision(2) << (itemTotal[i] / qty[i])
