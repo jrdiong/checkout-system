@@ -69,8 +69,14 @@ int main()
     } while (addMore == 'y' || addMore == 'Y');
 
     // Apply promo code
-    cout << "Enter promo code (SAVE10/SAVE20/NONE): ";
-    cin >> promoCode;
+    do {
+        cout << "Enter promo code (SAVE10/SAVE20/NONE): ";
+        cin >> promoCode;
+
+        if(promoCode != "SAVE10" && promoCode != "SAVE20" && promoCode != "NONE"){
+            cout << "Invalid promo code! Enter again.\n";
+        }
+    } while(promoCode != "SAVE10" && promoCode != "SAVE20" && promoCode != "NONE");
 
     if (promoCode == "SAVE10")
     {
